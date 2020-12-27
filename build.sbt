@@ -32,7 +32,7 @@ lazy val root: Project =
 // , scalacOptions in Test ++= Seq("-Yrangepos")
 
  , bintrayPackageLabels := Seq("sbt","plugin")
- , bintrayVcsUrl := Some("""git@github.com:bryght.space/r2bot.git""")
+ , bintrayVcsUrl := Some("""git@github.com:bryght-space/r2bot.git""")
 
  , initialCommands in console := """import com.bryghts.r2bot._"""
 
