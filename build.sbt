@@ -1,3 +1,4 @@
+import ReleaseTransformations._
 
 val domain = "com.bryghts"
 val projectName = "apptemplate"
@@ -42,6 +43,24 @@ lazy val root: Project =
  , licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
  , bintrayOrganization := Some("bryghts")
  , bintrayRepository := "bryght.space"
+
+
+ , releaseProcess := Seq[ReleaseStep](
+     checkSnapshotDependencies,              // : ReleaseStep
+     inquireVersions,                        // : ReleaseStep
+     runClean,                               // : ReleaseStep
+     runTest,                                // : ReleaseStep
+     setReleaseVersion,                      // : ReleaseStep
+     ReleasePlugin.autoImport.releaseStepTask(genDocs),
+     ReleasePlugin.autoImport.releaseStepCommand("git add ."),
+     commitReleaseVersion,                   // : ReleaseStep, performs the initial git checks
+     tagRelease,                             // : ReleaseStep
+     setNextVersion,                         // : ReleaseStep
+     commitNextVersion,                      // : ReleaseStep
+     pushChanges                             // : ReleaseStep, also checks that an upstream branch is properly configured
+   )
+
+
 )
 
 import java.nio.file.Path
