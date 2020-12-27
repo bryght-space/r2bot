@@ -13,7 +13,6 @@ lazy val root: Project =
 
    name := """r2bot"""
  , organization := "com.bryghts"
- , version := "0.0.1-SNAPSHOT"
 
  , sbtPlugin := true
 
