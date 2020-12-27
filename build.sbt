@@ -9,6 +9,7 @@ organization in ThisBuild := group
 lazy val root: Project =
   project
     .in(file("."))
+    .enablePlugins(SbtPlugin)
     .enablePlugins(ScriptedPlugin)
     .settings(
 
