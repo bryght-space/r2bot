@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+
+  once:
+
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - uses: olafurpg/setup-scala@v10
+    - name: Prepare snapshot documentation branch
+      run: "git checkout -B snapshot-docs && git reset --hard main"
+    - name: Generate docs
+      run: sbt "genDocs"
+    - name: Commit the new docs
+      shell: bash
+      run: |
+        git config --local user.email "${{ github.event.pusher.email }}"
+        git config --local user.name "${{ github.event.pusher.name }}"
+        (git add . && git commit -m "Generate snapshot docs") || true
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: snapshot-docs
+        force: true
