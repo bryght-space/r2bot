@@ -8,7 +8,7 @@ object PathOps {
   def path(name: String): Path =
     sbt.file(name).toPath
 
-  implicit class PathOps(val path: Path) extends AnyVal {
+  implicit class PathOpsExt(val path: Path) extends AnyVal {
 
     def allFilesRecursively: Iterator[Path] = {
       import scala.collection.JavaConverters._
