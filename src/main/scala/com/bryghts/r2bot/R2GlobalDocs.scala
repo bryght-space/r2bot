@@ -25,17 +25,22 @@ object R2GlobalDocs {
           "--markdown-extensions", "_no_ext_"
         ),
 
-        mdocVariables ++= r2GlobalDocsVariables.value ++ Map(
+        mdocVariables ++= r2GDocsVariables.value ++ Map(
           "VERSION" -> version.value
         )
 
       )
 
   trait R2GlobalDocsKeys {
-    val r2GenGlobalDocs =
-      taskKey[Unit]("Generates the global, not associated to any particular project, including '*._no_ext_' ones")
-    val r2GlobalDocsVariables =
+
+    // Configuration
+
+    val r2GDocsVariables =
       settingKey[Map[String, String]]("Variables to be used on the global docs")
+
+    // Actions
+    val r2GDocsDoGen =
+      taskKey[Unit]("Generates the global, not associated to any particular project, including '*._no_ext_' ones")
   }
 
   trait R2GlobalDocsHelpers {
@@ -51,7 +56,7 @@ object R2GlobalDocs {
   }
 
   lazy val r2DocsGlobalSettings = Seq (
-    r2GenGlobalDocs := {
+    r2GDocsDoGen := {
       val _ = (mdoc.in(r2GlobalDocs)).toTask("").value
       val docsRoot = path("global-docs")
       val extension = "._no_ext_"
@@ -72,7 +77,7 @@ object R2GlobalDocs {
     Seq(r2GlobalDocs)
 
   val r2DocsReleaseSteps = Seq[ReleaseStep](
-    ReleasePlugin.autoImport.releaseStepTask(r2GenGlobalDocs)
+    ReleasePlugin.autoImport.releaseStepTask(r2GDocsDoGen)
   )
 
 }
