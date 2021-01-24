@@ -4,7 +4,8 @@ import sbt._
 import sbt.Keys._
 import sbt.plugins.JvmPlugin
 import com.bryghts.r2bot.R2GlobalDocs._
-import _root_.com.bryghts.r2bot.{caps => r2caps}
+import com.bryghts.r2bot.{caps => r2caps}
+import com.bryghts.r2bot.caps.bintray.R2BintrayKeys
 
 object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
 
@@ -12,6 +13,8 @@ object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
   override def requires = JvmPlugin
 
   object autoImport extends R2ExtensionMethods
+                       with R2MetaKeys
+                       with R2BintrayKeys
                        with R2GlobalDocsKeys {
 
     object r2 extends R2GlobalDocsHelpers
@@ -49,6 +52,7 @@ trait R2ExtensionMethods {
     def r2Root: ProjectWithoutCapabilities =
       new ProjectWithoutCapabilities(
         p
+        .settings(R2MetaKeys.defaults)
         .settings(
 
            releaseProcess := Seq[ReleaseStep](

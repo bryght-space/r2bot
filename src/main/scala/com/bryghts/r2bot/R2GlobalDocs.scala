@@ -55,7 +55,7 @@ object R2GlobalDocs {
 
   }
 
-  lazy val r2DocsGlobalSettings = Seq (
+  lazy val r2DocsGlobalSettings: Seq[Def.Setting[_]]= Seq (
     r2GDocsDoGen := {
       val _ = (mdoc.in(r2GlobalDocs)).toTask("").value
       val docsRoot = path("global-docs")
