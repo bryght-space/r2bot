@@ -20,10 +20,16 @@ object BintrayCapability extends Capability {
           R2BintrayOwner.R2BintrayUser
       },
       r2BintrayRepository := "maven",
+      r2BintrayPublishTo := (Keys.publishTo in _root_.bintray.BintrayPlugin.autoImport.bintray).value,
 
       // Target settings
       bintrayOrganization := r2BintrayOwner.value.asSetting,
-      bintrayRepository := r2BintrayRepository.value
+      bintrayRepository := r2BintrayRepository.value,
+
+      // Commands
+      addCommandAlias(
+        "r2BintrayDoPublish",
+        ";set publishTo := r2BintrayPublishTo.value;publish")
     )
 
   }

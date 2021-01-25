@@ -71,13 +71,6 @@ trait R2ExtensionMethods {
              pushChanges                             // : ReleaseStep, also checks that an upstream branch is properly configured
            )
 
-         , publishTo := Some(
-             if (isSnapshot.value)
-               Opts.resolver.sonatypeSnapshots
-             else
-               Opts.resolver.sonatypeStaging
-           )
-
         )
       )
   }

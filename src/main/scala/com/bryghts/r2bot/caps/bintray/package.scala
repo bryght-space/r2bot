@@ -2,6 +2,7 @@ package com.bryghts.r2bot
 package caps
 
 import sbt._
+import sbt.librarymanagement.Resolver
 
 package object bintray {
 
@@ -27,6 +28,9 @@ package object bintray {
 
     val r2BintrayRepository =
       settingKey[String]("Id of the bintray repository where this project is to be deployed to")
+
+    val r2BintrayPublishTo =
+      taskKey[Option[Resolver]]("Configures where to publish to, when publishing to bintray")
   }
 
 }
