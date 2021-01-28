@@ -7,4 +7,4 @@ libraryDependencies += "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value
 
 // addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "1.0.0")
 
-addSbtPlugin("com.bryghts" % "r2bot" % "0.0.9")
+addSbtPlugin("com.bryghts" % "r2bot" % "0.0.10")
