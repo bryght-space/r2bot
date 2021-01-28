@@ -59,17 +59,19 @@ object R2GlobalDocs {
     r2GDocsDoGen := {
       val _ = (mdoc.in(r2GlobalDocs)).toTask("").value
       val docsRoot = path("global-docs")
-      val extension = "._no_ext_"
-      docsRoot
-        .allFilesRecursively
-        .filter(_.toString.endsWith(extension))
-        .map(docsRoot.relativize)
-        .foreach{source =>
-          val targetName = source.toString.reverse.drop(extension.length).reverse
-          val target = path(targetName)
-          target.delete()
-          source.renameTo(target)
-        }
+      if (docsRoot.toFile().exists()) {
+        val extension = "._no_ext_"
+        docsRoot
+          .allFilesRecursively
+          .filter(_.toString.endsWith(extension))
+          .map(docsRoot.relativize)
+          .foreach{source =>
+            val targetName = source.toString.reverse.drop(extension.length).reverse
+            val target = path(targetName)
+            target.delete()
+            source.renameTo(target)
+          }
+      }
     }
   )
 
