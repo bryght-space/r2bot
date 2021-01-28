@@ -55,11 +55,11 @@ object R2GlobalDocs {
 
   }
 
+  private val docsRoot = path("global-docs")
   lazy val r2DocsGlobalSettings: Seq[Def.Setting[_]]= Seq (
     r2GDocsDoGen := {
-      val _ = (mdoc.in(r2GlobalDocs)).toTask("").value
-      val docsRoot = path("global-docs")
       if (docsRoot.toFile().exists()) {
+        val _ = (mdoc.in(r2GlobalDocs)).toTask("").value
         val extension = "._no_ext_"
         docsRoot
           .allFilesRecursively
