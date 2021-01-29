@@ -9,4 +9,4 @@ libraryDependencies += "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value
 
 resolvers += Resolver.bintrayRepo("bryghts", "bryght.space")
 
-addSbtPlugin("com.bryghts" % "r2bot" % "0.0.10")
+addSbtPlugin("com.bryghts" % "r2bot" % "0.0.11")
