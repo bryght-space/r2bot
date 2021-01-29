@@ -5,7 +5,6 @@ val domain = "com.bryghts"
 val projectName = "apptemplate"
 val group = s"$domain.$projectName"
 
-organization in ThisBuild := group
 
 
 Global / r2GDocsVariables := Map(
@@ -33,6 +32,7 @@ lazy val root: Project =
  , organization := "com.bryghts"
 
  , sbtPlugin := true
+ , publishMavenStyle := false
 
  , bintrayPackageLabels := Seq("sbt","plugin")
  , bintrayVcsUrl := Some("""git@github.com:bryght-space/r2bot.git""")
