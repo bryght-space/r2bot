@@ -2,7 +2,7 @@ import xerial.sbt.Sonatype._
 
 publishMavenStyle := true
 
-sonatypeProfileName := "org.xerial"
+sonatypeProfileName := "com.bryghts"
 sonatypeProjectHosting := Some(GitHubHosting(user="bryght-space", repository="r2bot", email="esquerra@bryghts.com"))
 developers := List(
   Developer(id="marcesquerra", name="Marc Esquerra", email="esquerra@bryghts.com", url=url("https://github.com/marcesquerra"))
