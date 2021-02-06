@@ -26,4 +26,4 @@ jobs:
         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         PGP_PASSPHRASE: ${{ secrets.MAVEN_CENTRAL_GPG_PASSWORD }}
-      run: sbt publishSigned sonatype-bundle-release
+      run: sbt publishSigned sonatypeBundleRelease
