@@ -14,11 +14,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - id: install-secret-key
+      name: Install gpg secret key
+      run: |
+        cat <(echo -e "${{ secrets.MAVEN_CENTRAL_GPG_PRIVATE_KEY_B64 }}") | base64 --decode | gpg --batch --import
+        gpg --list-keys
     - uses: olafurpg/setup-scala@v10
-    - name: Publish to bintray
+    - name: Publish to maven central
       env:
         MAVEN_CENTRAL_GPG_PRIVATE_KEY_ID: ${{ secrets.MAVEN_CENTRAL_GPG_PRIVATE_KEY_ID }}
         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         PGP_PASSPHRASE: ${{ secrets.MAVEN_CENTRAL_GPG_PASSWORD }}
-      run: sbt publishSigned sonatypeBundleRelease
+      run: sbt publishSigned sonatype-bundle-release
