@@ -19,6 +19,7 @@ lazy val root: Project =
     .in(file("."))
     .r2Root
     .withCapabilities(
+      // caps.SbtPlugin
      )
     .enablePlugins(SbtPlugin)
     .enablePlugins(ScriptedPlugin)
@@ -28,7 +29,6 @@ lazy val root: Project =
  , organization := "com.bryghts"
 
  , sbtPlugin := true
- , publishMavenStyle := false
 
  , initialCommands in console := """import com.bryghts.r2bot._"""
 

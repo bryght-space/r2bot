@@ -4,7 +4,8 @@ import sbt._
 import sbt.Keys._
 import sbt.plugins.JvmPlugin
 import com.bryghts.r2bot.R2GlobalDocs._
-// import com.bryghts.r2bot.{caps => r2caps}
+import com.bryghts.r2bot.{caps => r2caps}
+import com.bryghts.r2bot.caps.sbtplugin.R2SbtpluginKeys
 
 object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
 
@@ -13,11 +14,15 @@ object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
 
   object autoImport extends R2ExtensionMethods
                        with R2MetaKeys
+                       with R2SbtpluginKeys
                        with R2GlobalDocsKeys {
 
     object r2 extends R2GlobalDocsHelpers
 
     object caps {
+
+      val SbtPlugin =
+        r2caps.sbtplugin.SbtpluginCapability
     }
 
   }
@@ -37,47 +42,50 @@ object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
 
 
 trait R2ExtensionMethods {
-
-  import _root_.sbtrelease.ReleasePlugin
-  import ReleasePlugin.autoImport._
-  import ReleaseTransformations._
   import R2botPlugin.autoImport._
 
   implicit class R2ProjectOps(val p: Project) {
 
     def r2Root: ProjectWithoutCapabilities =
       new ProjectWithoutCapabilities(
-        p
-        .settings(R2MetaKeys.defaults)
-        .settings(
-
-           releaseProcess := Seq[ReleaseStep](
-             checkSnapshotDependencies,              // : ReleaseStep
-             inquireVersions,                        // : ReleaseStep
-             runClean,                               // : ReleaseStep
-             runTest,                                // : ReleaseStep
-             setReleaseVersion) ++                   // : ReleaseStep
-           r2DocsReleaseSteps ++
-           Seq[ReleaseStep](
-             ReleasePlugin.autoImport.releaseStepCommand("git add ."),
-             commitReleaseVersion,                   // : ReleaseStep, performs the initial git checks
-             tagRelease,                             // : ReleaseStep
-             setNextVersion,                         // : ReleaseStep
-             commitNextVersion,                      // : ReleaseStep
-             pushChanges                             // : ReleaseStep, also checks that an upstream branch is properly configured
-           )
-
-        )
+        p.settings(R2MetaKeys.defaults)
       )
+
   }
 
 }
 
 class ProjectWithoutCapabilities private[r2bot] (val p: Project) extends AnyVal {
+
+  import _root_.sbtrelease.ReleasePlugin
+  import ReleasePlugin.autoImport._
+  import ReleaseTransformations._
+
   def withCapabilities(caps: Capability*): Project =
     caps
       .foldLeft(ProcessedProject(p, Set()))(_ +_)
       .evaluatedProject
+      .settings(
+         releaseProcess := Seq[ReleaseStep](
+           checkSnapshotDependencies,              // : ReleaseStep
+           inquireVersions,                        // : ReleaseStep
+           runClean,                               // : ReleaseStep
+           runTest,                                // : ReleaseStep
+           setReleaseVersion) ++                   // : ReleaseStep
+         r2DocsReleaseSteps ++
+         Seq[ReleaseStep](
+           ReleasePlugin.autoImport.releaseStepCommand("git add ."),
+           commitReleaseVersion,                   // : ReleaseStep, performs the initial git checks
+           tagRelease) ++                          // : ReleaseStep
+         caps.toList.flatMap(
+           _.postCommitReleaseVersionReleaseActions) ++
+         Seq[ReleaseStep](
+           setNextVersion,                         // : ReleaseStep
+           commitNextVersion,                      // : ReleaseStep
+           pushChanges                             // : ReleaseStep, also checks that an upstream branch is properly configured
+         )
+
+      )
 }
 
 case class ProcessedProject(
