@@ -17,6 +17,8 @@ jobs:
     - uses: olafurpg/setup-scala@v10
     - name: Publish to bintray
       env:
-        BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-        BINTRAY_PASS: ${{ secrets.BINTRAY_PASS }}
-      run: sbt r2BintrayDoPublish
+        MAVEN_CENTRAL_GPG_PRIVATE_KEY_ID: ${{ secrets.MAVEN_CENTRAL_GPG_PRIVATE_KEY_ID }}
+        SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        PGP_PASSPHRASE: ${{ secrets.MAVEN_CENTRAL_GPG_PASSWORD }}
+      run: sbt publishSigned sonatypeBundleRelease

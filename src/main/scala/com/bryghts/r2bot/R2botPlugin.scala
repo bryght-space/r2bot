@@ -4,8 +4,7 @@ import sbt._
 import sbt.Keys._
 import sbt.plugins.JvmPlugin
 import com.bryghts.r2bot.R2GlobalDocs._
-import com.bryghts.r2bot.{caps => r2caps}
-import com.bryghts.r2bot.caps.bintray.R2BintrayKeys
+// import com.bryghts.r2bot.{caps => r2caps}
 
 object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
 
@@ -14,14 +13,11 @@ object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
 
   object autoImport extends R2ExtensionMethods
                        with R2MetaKeys
-                       with R2BintrayKeys
                        with R2GlobalDocsKeys {
 
     object r2 extends R2GlobalDocsHelpers
 
     object caps {
-      val Bintray =
-        r2caps.bintray.BintrayCapability
     }
 
   }
@@ -80,7 +76,7 @@ trait R2ExtensionMethods {
 class ProjectWithoutCapabilities private[r2bot] (val p: Project) extends AnyVal {
   def withCapabilities(caps: Capability*): Project =
     caps
-      .foldLeft(ProcessedProject(p, Set(bintray.BintrayPlugin)))(_ +_)
+      .foldLeft(ProcessedProject(p, Set()))(_ +_)
       .evaluatedProject
 }
 
