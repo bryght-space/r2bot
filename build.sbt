@@ -19,33 +19,34 @@ lazy val root: Project =
     .in(file("."))
     .r2Root
     .withCapabilities(
-      // caps.SbtPlugin
+      caps.SbtPlugin
      )
     .enablePlugins(SbtPlugin)
     .enablePlugins(ScriptedPlugin)
     .settings(
+         r2SbtpluginEnableSelfref := true
+     )
+    .settings(
 
-   name := """r2bot"""
- , organization := "com.bryghts"
+       name := """r2bot"""
+     , organization := "com.bryghts"
 
- , sbtPlugin := true
+     , initialCommands in console := """import com.bryghts.r2bot._"""
 
- , initialCommands in console := """import com.bryghts.r2bot._"""
+    // set up 'scripted; sbt plugin for testing sbt plugins
+     , scriptedLaunchOpts ++=
+        Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
 
-// set up 'scripted; sbt plugin for testing sbt plugins
- , scriptedLaunchOpts ++=
-    Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+     , licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
- , licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
+     , addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.13")
+     , addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.14")
 
- , addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.13")
- , addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.14")
-
- , addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "1.0.0")
+     , addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "1.0.0")
 
 
- , addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.5")
- , addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.1.1")
+     , addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.5")
+     , addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.1.1")
 
 )
 
