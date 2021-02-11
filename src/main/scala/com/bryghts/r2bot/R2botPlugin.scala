@@ -23,6 +23,7 @@ object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
 
       val SbtPlugin =
         r2caps.sbtplugin.SbtpluginCapability
+
     }
 
   }
@@ -35,8 +36,6 @@ object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
     r2DocsExtraProjects
   override lazy val globalSettings =
     r2DocsGlobalSettings
-
-
 
 }
 

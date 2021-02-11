@@ -16,8 +16,8 @@ object SbtpluginCapability extends Capability {
     val enabled = (currentRef / r2SbtpluginEnableSelfref).get(structure.data).getOrElse(false)
 
     if(enabled) {
-      Command.process("git add .", state)
       Project.runTask((Compile / r2SbtpluginDoGenSelfref).scopedKey, state)
+      Command.process("git add .", state)
       Command.process("git commit -m 'Foo'", state)
     }
     else
@@ -52,7 +52,7 @@ object SbtpluginCapability extends Capability {
   }
 
   override def postCommitReleaseVersionReleaseActions: List[ReleaseStep] =
-  Nil
-
+    ReleasePlugin.autoImport.releaseStepCommand("r2SbtpluginDoGenAndReleaseSelfref") ::
+    Nil
 
 }
