@@ -12,3 +12,6 @@ project/target
 .bloop/
 .metals/
 bin
+
+project/self.sbt
+
