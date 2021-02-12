@@ -13,12 +13,18 @@ object SbtpluginCapability extends Capability {
     val extracted: Extracted = Project.extract(state)
     import extracted._
     
-    val enabled = (currentRef / r2SbtpluginEnableSelfref).get(structure.data).getOrElse(false)
+    val enabled = (currentRef / r2SbtpluginSelfrefEnabled).get(structure.data).getOrElse(false)
 
     if(enabled) {
+
+      val msg =
+        (currentRef / r2SbtpluginSelfrefCommitMessage)
+          .get(structure.data)
+          .getOrElse("Upgrading self-refrence")
+
       Project.runTask((Compile / r2SbtpluginDoGenSelfref).scopedKey, state)
       Command.process("git add .", state)
-      Command.process("git commit -m 'Foo'", state)
+      Command.process(s"git commit -m $msg", state)
     }
     else
       println("Skiping generation of sbtplugin Selfref")
@@ -32,7 +38,7 @@ object SbtpluginCapability extends Capability {
     .enablePlugins(SbtPlugin)
     .settings(
          sbtPlugin := true
-       , r2SbtpluginEnableSelfref := false
+       , r2SbtpluginSelfrefEnabled := false
        , r2SbtpluginSelfrefFilename := "self.sbt"
        , r2SbtpluginDoGenSelfref := {
            val base = baseDirectory.value / "project"
@@ -45,6 +51,10 @@ object SbtpluginCapability extends Capability {
            IO.write(file, contents)
 
            file
+         }
+       , r2SbtpluginSelfrefCommitMessage := {
+           val v = version.value
+           s"Upgrading self-refrence to version '$v'"
          }
        , commands += r2SbtpluginDoGenAndReleaseSelfref
     )

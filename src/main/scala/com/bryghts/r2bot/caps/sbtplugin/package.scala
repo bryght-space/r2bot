@@ -11,8 +11,11 @@ package object sbtplugin {
     val r2SbtpluginSelfrefFilename =
       settingKey[String]("Name of the file inside the project folder that will selfreference this sbt plugin")
 
-    val r2SbtpluginEnableSelfref =
+    val r2SbtpluginSelfrefEnabled =
       settingKey[Boolean]("Whether or not this project should selfreference")
+
+    val r2SbtpluginSelfrefCommitMessage =
+      settingKey[String]("Commit message to be used when upgrading the self-refrence")
 
     val r2SbtpluginDoGenSelfref =
       taskKey[File]("Create a file in the 'project' folder for this plugin to reference itself")

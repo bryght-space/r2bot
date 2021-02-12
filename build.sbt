@@ -24,7 +24,7 @@ lazy val root: Project =
     .enablePlugins(SbtPlugin)
     .enablePlugins(ScriptedPlugin)
     .settings(
-         r2SbtpluginEnableSelfref := true
+         // r2SbtpluginEnableSelfref := true
      )
     .settings(
 
