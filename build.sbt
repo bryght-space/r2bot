@@ -21,10 +21,9 @@ lazy val root: Project =
     .withCapabilities(
       caps.SbtPlugin
      )
-    .enablePlugins(SbtPlugin)
     .enablePlugins(ScriptedPlugin)
     .settings(
-         r2SbtpluginSelfrefEnabled := false
+         r2SbtpluginSelfrefEnabled := true
      )
     .settings(
 
