@@ -6,6 +6,7 @@ import sbt.Keys._
 import sbt.plugins.SbtPlugin
 import com.bryghts.r2bot.R2botPlugin.autoImport._
 import sbtrelease.ReleasePlugin.autoImport.ReleaseStep
+import sbtrelease.ReleasePlugin
 
 object SbtpluginCapability extends Capability {
 
