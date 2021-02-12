@@ -1,2 +1,2 @@
-addSbtPlugin("com.bryghts" % "r2bot" % "0.0.21")
+addSbtPlugin("com.bryghts" % "r2bot" % "0.0.22")
 
