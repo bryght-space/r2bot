@@ -25,7 +25,7 @@ object SbtpluginCapability extends Capability {
 
       Project.runTask((Compile / r2SbtpluginDoGenSelfref).scopedKey, state)
       Command.process("git add .", state)
-      Command.process(s"""git commit -m "$msg" """, state)
+      Command.process(s"""git commit -m "$msg"""", state)
     }
     else
       println("Skiping generation of sbtplugin Selfref")
