@@ -24,13 +24,15 @@ object SbtpluginCapability extends Capability {
           .getOrElse("Upgrading self-refrence")
 
       Project.runTask((Compile / r2SbtpluginDoGenSelfref).scopedKey, state)
-      Command.process("git add .", state)
-      Command.process(s"""git commit -m "$msg"""", state)
+      val s1 = Command.process("git add .", state)
+      val s2 = Command.process(s"""git commit -m "$msg"""", s1)
+      s2
     }
-    else
+    else {
       println("Skiping generation of sbtplugin Selfref")
+      state
+    }
 
-    state
   }
 
   override def applyConfiguration(p: Project): Project = {
