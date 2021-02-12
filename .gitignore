@@ -13,5 +13,3 @@ project/target
 .metals/
 bin
 
-project/self.sbt
-
