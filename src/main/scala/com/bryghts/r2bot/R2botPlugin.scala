@@ -6,6 +6,7 @@ import sbt.plugins.JvmPlugin
 import com.bryghts.r2bot.R2GlobalDocs._
 import com.bryghts.r2bot.{caps => r2caps}
 import com.bryghts.r2bot.caps.sbtplugin.R2SbtpluginKeys
+import com.bryghts.r2bot.caps.mavencentral.R2MavencentralKeys
 
 object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
 
@@ -15,6 +16,7 @@ object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
   object autoImport extends R2ExtensionMethods
                        with R2MetaKeys
                        with R2SbtpluginKeys
+                       with R2MavencentralKeys
                        with R2GlobalDocsKeys {
 
     object r2 extends R2GlobalDocsHelpers
@@ -23,6 +25,9 @@ object R2botPlugin extends AutoPlugin with R2ExtensionMethods {
 
       val SbtPlugin =
         r2caps.sbtplugin.SbtpluginCapability
+
+      val MavenCentral =
+        r2caps.mavencentral.MavencentralCapability
 
     }
 
@@ -64,6 +69,16 @@ class ProjectWithoutCapabilities private[r2bot] (val p: Project) extends AnyVal 
     caps
       .foldLeft(ProcessedProject(p, Set()))(_ +_)
       .evaluatedProject
+      .settings(
+         // Giving this a VERY opinionated default value
+         licenses := {
+           licenses.?.value match {
+             case Some(oldValue) => oldValue
+             case None =>
+               Seq("MIT" -> url("https://opensource.org/licenses/MIT"))
+           }
+         }
+       )
       .settings(
          releaseProcess := Seq[ReleaseStep](
            checkSnapshotDependencies,              // : ReleaseStep

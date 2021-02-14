@@ -8,17 +8,14 @@ package object mavencentral {
 
   trait R2MavencentralKeys {
 
-    // val r2SbtpluginSelfrefFilename =
-    //   settingKey[String]("Name of the file inside the project folder that will selfreference this sbt plugin")
+    val r2MavencentralGpgPrivateKey =
+      settingKey[Credentials]("Credentials configuring the GPG private key")
 
-    // val r2SbtpluginSelfrefEnabled =
-    //   settingKey[Boolean]("Whether or not this project should selfreference")
+    val r2MavencentralSonatypeCredentials =
+      settingKey[Credentials]("Sonatype credentials")
 
-    // val r2SbtpluginSelfrefCommitMessage =
-    //   settingKey[String]("Commit message to be used when upgrading the self-refrence")
-
-    // val r2SbtpluginDoGenSelfref =
-    //   taskKey[File]("Create a file in the 'project' folder for this plugin to reference itself")
+    val r2MavencentralSonatypeProfileName =
+      settingKey[String]("Sonatype profile name")
 
   }
 

@@ -13,6 +13,7 @@ package object sbtplugin {
 
     val r2SbtpluginSelfrefEnabled =
       settingKey[Boolean]("Whether or not this project should selfreference")
+        .withRank(KeyRanks.Invisible)
 
     val r2SbtpluginSelfrefCommitMessage =
       settingKey[String]("Commit message to be used when upgrading the self-refrence")
