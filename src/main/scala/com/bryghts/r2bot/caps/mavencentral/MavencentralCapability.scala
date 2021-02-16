@@ -42,7 +42,10 @@ object MavencentralCapability extends Capability {
            }
 
          }
-       , sonatypeProjectHosting := Some(GitHubHosting(user=r2MetaGithubOwnerId.value, repository=r2MetaGithubProjectId.value, email=r2MetaProjectEmail.value))
+       , sonatypeProjectHosting :=
+          r2MetaProjectEmail.value.map{email =>
+            GitHubHosting(user=r2MetaGithubOwnerId.value, repository=r2MetaGithubProjectId.value, email=email)
+          }
        , r2MavencentralSonatypeProfileName := r2MetaOwnerId.value
        , r2MavencentralSonatypeCredentials := {
            import sbt.Keys.streams

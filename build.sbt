@@ -49,3 +49,5 @@ lazy val root: Project =
 
 )
 
+r2MetaLeadDevEmail := "esquerra@bryghts.com"
+

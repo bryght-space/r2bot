@@ -14,7 +14,7 @@ trait R2MetaKeys {
   val r2MetaLeadDevName     = settingKey[String]("Name of the lead def of the project")
   val r2MetaLeadDevEmail    = settingKey[String]("Email of the lead def of the project")
   val r2MetaLeadDevWebsite  = settingKey[URL]("URL of the website of the lead def of the project")
-  val r2MetaProjectEmail    = settingKey[String]("Email of the lead def of the project")
+  val r2MetaProjectEmail    = settingKey[Option[String]]("Main contact email of the project")
 
 }
 
@@ -27,7 +27,7 @@ object R2MetaKeys {
     , r2MetaGithubProjectId := r2MetaProjectId.value
     , r2MetaLeadDevId       := r2MetaOwnerId.value
     , r2MetaLeadDevName     := r2MetaOwnerId.value
-    , r2MetaProjectEmail    := r2MetaLeadDevEmail.value
+    , r2MetaProjectEmail    := r2MetaLeadDevEmail.?.value
     , r2MetaLeadDevWebsite  := url(s"https://github.com/${r2MetaGithubOwnerId.value}")
     , developers :=
         List(
