@@ -19,7 +19,8 @@ lazy val root: Project =
     .in(file("."))
     .r2Root
     .withCapabilities(
-      caps.SbtPlugin
+      caps.SbtPlugin,
+      caps.MavenCentral
      )
     .enablePlugins(ScriptedPlugin)
     .settings(
@@ -49,5 +50,4 @@ lazy val root: Project =
 
 )
 
-r2MetaLeadDevEmail := "esquerra@bryghts.com"
 
