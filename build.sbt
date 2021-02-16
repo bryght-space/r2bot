@@ -20,7 +20,7 @@ lazy val root: Project =
     .r2Root
     .withCapabilities(
       caps.SbtPlugin,
-      // caps.MavenCentral,
+      caps.MavenCentral,
      )
     .enablePlugins(ScriptedPlugin)
     .settings(
