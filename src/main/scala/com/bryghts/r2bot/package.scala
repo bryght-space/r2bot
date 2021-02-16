@@ -5,7 +5,11 @@ package object r2bot {
   case class ReportableError(msg: String) extends Exception(msg)
                                              with sbt.FeedbackProvidedException
 
-  def reportFailure(msg: String): Nothing =
-    throw ReportableError(msg)
+  implicit class LoggerExtension(val logger: sbt.util.Logger) extends AnyVal {
+    def reportFailure(msg: String): Nothing = {
+      logger.error(msg)
+      throw ReportableError(msg)
+    }
+  }
 
 }

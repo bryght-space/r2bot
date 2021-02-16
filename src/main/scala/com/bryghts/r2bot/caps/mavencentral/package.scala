@@ -9,10 +9,10 @@ package object mavencentral {
   trait R2MavencentralKeys {
 
     val r2MavencentralGpgPrivateKey =
-      settingKey[Credentials]("Credentials configuring the GPG private key")
+      taskKey[Credentials]("Credentials configuring the GPG private key")
 
     val r2MavencentralSonatypeCredentials =
-      settingKey[Credentials]("Sonatype credentials")
+      taskKey[Credentials]("Sonatype credentials")
 
     val r2MavencentralSonatypeProfileName =
       settingKey[String]("Sonatype profile name")

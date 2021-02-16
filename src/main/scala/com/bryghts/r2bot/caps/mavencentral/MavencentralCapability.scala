@@ -37,7 +37,7 @@ object MavencentralCapability extends Capability {
              case Left(error) =>
                val log = sLog.value
                log.error(error)
-               reportFailure(
+               log.reportFailure(
                 "The ID of the key to sign the artifact (for publishing to maven central) could not be loaded")
            }
 
@@ -63,7 +63,7 @@ object MavencentralCapability extends Capability {
                val log = sLog.value
                val errors = l.collect{case Left(e) => e}
                errors.foreach(err => log.error(err))
-               reportFailure("Sonatype credentials could not be loaded")
+               log.reportFailure("Sonatype credentials could not be loaded")
            }
          }
 
